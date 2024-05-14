@@ -1,0 +1,62 @@
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import random
+
+def y (a, c):
+
+    y_lin = []
+    x_lin = [0, 1, 2, 3, 4, 5]
+
+    for x in x_lin:
+        y_lin.append (
+            a*x + c
+        )
+    return x_lin, y_lin
+x_lin, y_lin = y (2, 4)
+print (x_lin)
+print (y_lin)
+
+def Y (w, B):
+    
+    Y_app = []
+    x_lin
+
+    for x in x_lin:
+        Y_app.append (
+            w*x + B
+        )
+    return x_lin, Y_app
+x_lin, Y_app = Y (4, 1)
+print (x_lin)
+print (Y_app)
+
+def dL_dW (w, B):
+    N = 6
+    sumdldw = 0
+    for N in range (N):
+        sumdldw += (-2/6)*(y_lin[N-1]-w*x_lin[N-1]-B)*x_lin[N-1]
+    return sumdldw
+sumdldw = dL_dW (4, 1)
+print (sumdldw)
+
+def dL_dB (w,B):
+    N = 6
+    sumdldb = 0
+    for N in range (N):
+        sumdldb += (-2/6)*(y_lin[N-1]-w*x_lin[N-1]-B)
+    return sumdldb
+sumdldb = dL_dB (4, 1)
+print (sumdldb)
+
+def W (w, B):
+    lr = 0.001
+    i  = 9000
+    for i in range (i):
+        Wt= w-lr*dL_dW(w, B)
+        Bt= B-lr*dL_dB(w, B)
+        w = Wt
+        B = Bt
+        print (Wt)
+        print (Bt)
+    return Wt
+Wt= W (4,1)
