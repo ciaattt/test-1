@@ -1,0 +1,172 @@
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from numpy.random import rand
+from math import sqrt
+import random
+
+a = 4
+c = 2
+iteration = 1000
+
+def x(i):
+
+    x_in = []
+    x0 = 0
+
+    for i in range (i):
+        x_in.append (
+            x0 + i
+        )
+    return x_in
+x_in = x(18)
+
+K = len (x_in)
+print (K)
+
+def xavier_init(K):
+
+    lower, upper = -(1/sqrt (K)), (1/sqrt (K))
+    scaling_factor = rand (1000)
+    scaling = lower  + scaling_factor * (upper-lower)
+    l1 = scaling.min()
+    l2 = scaling.max()
+    return l1,l2
+l1,l2 = xavier_init(K)
+print (l1)
+print (l2)
+
+w1 = random.uniform(l1,l2)
+b2 = random.uniform(l1,l2)
+w2 = random.uniform(l1,l2)
+b3 = random.uniform(l1,l2)
+
+def y (a,c):
+
+    y_in = []
+    x_in 
+
+    for x in x_in :
+        y_in.append (
+            x * a + c
+        )
+    return x_in, y_in
+x_in, y_in = y (a,c)
+print (y_in)
+print (x_in)
+
+def Y_1 (w1,b2):
+
+    Y_in = []
+    x_in 
+
+    for x in x_in :
+        Y_in.append (
+            x * w1 + b2
+        )
+    return Y_in
+Y_in = Y_1 (w1,b2)
+print (Y_in)
+print (x_in)
+
+def Y_2 (w2,b3):
+
+    Y_in 
+    Y_in2 = []
+
+    for x in Y_in:
+        Y_in2.append (
+            w2 * x + b3
+        )
+    return Y_in, Y_in2
+Y_in, Y_in2 = Y_2 (w2,b3)
+print (Y_in2)
+
+def dLdW2 (w1, w2, b2, b3):
+
+    N = len (x_in)
+    sumdw2 = 0
+    for N in range (N):
+        sumdw2 += (-2/K)*(y_in [N-1] - w2 * (w1*x_in[N-1]+b2)-b3 )*(w1*x_in[N-1]+b2)
+    return sumdw2
+sumdw2 = dLdW2 (w1, w2, b2, b3)
+print (sumdw2)
+
+def dLdB2 (w1, w2, b2, b3):
+
+    N = len (x_in)
+    sumdb2 = 0
+    for N in range (N):
+        sumdb2 += (-2/K)*(y_in [N-1] - w2 *(w1*x_in[N-1]+b2) - b3) 
+    return sumdb2
+sumdb2 = dLdB2 (w1, w2, b2, b3)
+print (sumdb2)
+
+def dLdW1 (w1, w2, b2, b3):
+
+    N = len (x_in)
+    sumdw1 = 0
+    for N in range (N):
+        sumdw1 += (-2/K)*(y_in[N-1] - w2 * (w1*x_in[N-1]+b2) - b3)*(w2)*(x_in [N-1])
+    return sumdw1
+sumdw1 = dLdW1 (w1, w2, b2, b3)
+print (sumdw1)
+
+def dLdB1 (w1, w2, b2, b3):
+
+    N = len (x_in)
+    sumdb1 = 0
+    for N in range (N):
+        sumdb1 += (-2/K)*(y_in[N-1] - w2 * (w1*x_in[N-1]+b2) - b3)*(w2)
+    return sumdb1
+sumdb1 = dLdB1 (w1, w2, b2, b3)
+print (sumdb1)
+
+def MSE (w1, w2, b2, b3):
+
+    N = len (x_in)
+    summse = 0
+    for N in range (N):
+        summse += (1/K)*(y_in[N-1]-(w2 *(w1*x_in[N-1]+b2) - b3))
+    return summse
+summse = MSE (w1, w2, b2, b3)
+print (summse)
+
+w_1t_data = []
+b_2t_data = []
+
+def w_2update (w1, w2, b2, b3):
+    
+    epochs = iteration
+    delta = 0.001
+    
+    
+    for epochs in range (epochs):
+
+        fig, ax = plt.subplots(1,2, figsize=(10,5), dpi=500)
+    
+        w_2 = w2 - delta*dLdW2 (w1,w2,b2,b3)
+        b_3 = b3 - delta*dLdB2 (w1,w2,b2,b3)
+        w_1 = w1 - delta*dLdW1 (w1,w2,b2,b3)
+        b_2 = b2 - delta*dLdB1 (w1,w2,b2,b3) 
+        w2 = w_2
+        b3 = b_3        
+        w1 = w_1
+        b2 = b_2
+        loss = MSE (w1, w2, b2, b3)
+       
+        
+        #print (f"w_1t : {w_1t:.2f} | b_2t : {b_2t:.2f}")
+        print (f"loss : {loss}  | w2 : {w_2}  | w1 : {w_1}")
+        w_1t_data.append(w_1)
+        b_2t_data.append(b_2)
+        ax[0].plot(w_1t_data)
+        ax[1].plot(b_2t_data)
+        
+        
+
+    return epochs, b_2, w_1
+
+epochs, b_2, w_1 = w_2update (w1, w2, b2, b3)
+
+
+
